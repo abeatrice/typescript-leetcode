@@ -1,6 +1,5 @@
 # Typescript Leetcode
 
-## Local Dev
 Generate a new challenge directory with a function and test
 ```sh
 make new name="004-newChallenge"
