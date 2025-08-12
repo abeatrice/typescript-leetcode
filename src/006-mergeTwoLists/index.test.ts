@@ -1,7 +1,5 @@
-import { 
-  ListNode, 
-  mergeTwoLists 
-} from './index.js';
+import { mergeTwoLists } from './index.js';
+import { ListNode, listToArray, arrayToList } from '../common/ListNode';
 
 type testCase = {
   list1: ListNode | null;
@@ -11,9 +9,9 @@ type testCase = {
 
 const testCases: testCase[] = [
   {
-    list1: new ListNode(1, new ListNode(2, new ListNode(4))),
-    list2: new ListNode(1, new ListNode(3, new ListNode(4))),
-    expected: new ListNode(1, new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(4)))))),
+    list1: arrayToList([1,2,4]),
+    list2: arrayToList([1,3,4]),
+    expected: arrayToList([1,1,2,3,4,4]),
   },
   {
     list1: null,
@@ -22,26 +20,26 @@ const testCases: testCase[] = [
   },
   {
     list1: null,
-    list2: new ListNode(0),
-    expected: new ListNode(0),
+    list2: arrayToList([0]),
+    expected: arrayToList([0]),
   },
   {
-    list1: new ListNode(1),
+    list1: arrayToList([1]),
     list2: null,
-    expected: new ListNode(1),
+    expected: arrayToList([1]),
   },
 ];
 
-function listToArray(head: ListNode | null): number[] {
-  const result: number[] = [];
-  while (head !== null) {
-    result.push(head.val);
-    head = head.next;
-  }
-  return result;
-}
-
 describe('006-mergeTwoLists', () => {
+
+  test(`arrayToList should be the same as listToArray`, () => {
+    const inputArray = [1, 2, 3];
+    const list = arrayToList([...inputArray]);
+    const outputArray = listToArray(list);
+
+    expect(outputArray).toEqual(inputArray);
+  });
+
   for (const { list1, list2, expected } of testCases) {
     test(`mergeTwoLists(${listToArray(list1)}, ${listToArray(list2)}) should return ${listToArray(expected)}`, () => {
       const result = mergeTwoLists(list1, list2);
